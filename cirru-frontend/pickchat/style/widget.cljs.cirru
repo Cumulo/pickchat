@@ -28,16 +28,6 @@ def textbox $ {}
   :background-color $ hsl 0 0 96
   :outline |none
 
-def app $ {}
-  :flex-shrink 0
-  :margin "|40px auto"
-  :width 500
-
-def task $ {}
-  :margin "|10px 0"
-  :display |flex
-  :align-items |center
-
 def icon $ {}
   :width 20
   :height 20
@@ -51,3 +41,11 @@ def icon $ {}
   :background-color $ hsl 0 80 90
   :border-radius 10
   :cursor |pointer
+
+def message-box $ {}
+  :flex 1
+  :border :none
+  :outline :none
+  :font-size 16
+  :font-family "|Verdana"
+  :padding "|4px 8px"

@@ -2,6 +2,7 @@
 ns pickchat.style.layout
   :require
     [] reagent.core :as r
+    [] hsl.core :refer $ [] hsl
 
 def fullscreen $ {}
   :width |100%
@@ -19,9 +20,50 @@ def hspace $ {}
 def vspace $ {}
   :width |100%
 
-def center-content $ {}
-  :display |flex
-  :flex-direction |row
+def row $ {}
+  :display :flex
+  :flex-direction :row
+  :align-items :stretch
+
+def column $ {}
+  :display :flex
+  :flex-direction :column
+  :align-items :stretch
+
+def flex $ {}
+  :flex 1
+
+def center-content $ merge row $ {}
   :justify-content |center
-  :align-items |center
   :padding |40px
+
+def sidebar $ merge column $ {}
+  :width |300px
+  :background-color $ hsl 0 0 90
+
+def sidebar-header $ {}
+  :height 60
+  :background-color $ hsl 0 0 70
+
+def sidebar-body $ merge flex
+
+def app $ merge row $ {}
+  :flex-shrink 0
+  :margin "|0px"
+  :width 500
+  :position :absolute
+  :width |100%
+  :height |100%
+
+def body $ merge flex column $ {}
+  :background-color $ hsl 0 0 94
+
+def body-header $ {}
+  :height 60
+  :background-color $ hsl 0 0 80
+
+def body-body $ merge flex
+
+def body-footer $ merge row $ {}
+  :height 60
+  :background-color $ hsl 0 0 80

@@ -5,20 +5,34 @@ ns pickchat.schema
 
 def database $ {}
   :states $ {}
-  :tasks $ {}
+  :channels $ {}
+  :messages $ {}
   :users $ {}
-
-def task $ {}
-  :text |
-  :done false
-  :id nil
-  :time nil
 
 def state $ {}
   :user-id nil
-  :counter 0
+
+def user $ {}
+  :id nil
+  :name nil
+  :avatar nil
+
+def channel $ {}
+  :id nil
+  :title nil
+  :time nil
+  :author-id nil
+  :member-ids $ []
+
+def message $ {}
+  :id nil
+  :text nil
+  :time nil
+  :author-id nil
 
 def store $ {}
   :state state
-  :tasks (:tasks database)
-  :users (:users database)
+  :channels (:channels database)
+  :router $ {}
+    :name :home
+    :data $ {}

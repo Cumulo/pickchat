@@ -17,25 +17,33 @@ defn vspace (x)
     {} :style
       merge la/vspace $ {} :height x
 
-defn task-comp ()
+defn message-box ()
   let
-      draft $ atom |
-      local-time $ atom 1
-    fn (task send)
+      text $ r/atom |
+      on-change $ fn (event)
+        reset! text (-> event .-target .-value)
+
+    fn (send)
       let
-          on-remove-task $ fn (event)
-            send :task/remove (:id task)
-          on-change $ fn (event)
-            reset! draft (.-value (.-target event))
-            reset! local-time $ .valueOf (new js/Date)
-            send :task/text $ {} :id (:id task) :text (.-value (.-target event))
-        [] :div ({} :style wi/task)
-          [] :input $ {}
-            :style wi/textbox
-            :value $ if (> @local-time (:time task)) @draft (:text task)
-            :on-change on-change
-          hspace 10
-          [] :div ({} :style wi/icon :on-click on-remove-task) |✕
+          on-key-down $ fn (event)
+            if (= (.-keyCode event) 13)
+              do
+                send :message/create @text
+                .preventDefault event
+                reset! text |
+        [] :textarea $ {} :style wi/message-box :placeholder "|Say something" :value @text :on-change on-change :on-key-down on-key-down
+
+defn work-page ()
+  fn (send)
+    [] :div ({} :style la/app)
+      [] :div ({} :style la/sidebar)
+        [] :div ({} :style la/sidebar-header)
+        [] :div ({} :style la/sidebar-body)
+      [] :div ({} :style la/body)
+        [] :div ({} :style la/body-header)
+        [] :div ({} :style la/body-body)
+        [] :div ({} :style la/body-footer)
+          [] message-box send
 
 defn page ()
   let
@@ -51,13 +59,4 @@ defn page ()
                 send :task/create @draft
                 reset! draft |
         [] :div ({} :style la/fullscreen)
-          [] :div ({} :style wi/app)
-            [] :input ({} :style wi/textbox :value @draft :on-change on-draft-change :placeholder "|draft")
-            hspace 10
-            [] :button ({} :style wi/button :on-click on-create) |Submit
-            ->> (:tasks store)
-              map $ fn (entry) (get entry 1)
-              sort-by $ fn (task) (- 0 (:time task))
-              map $ fn (task)
-                [] :div ({} :key (:id task))
-                  [] task-comp task send
+          [] work-page send

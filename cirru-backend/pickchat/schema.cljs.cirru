@@ -11,6 +11,7 @@ def database $ {}
 
 def state $ {}
   :user-id nil
+  :modals $ []
 
 def user $ {}
   :id nil
@@ -32,7 +33,12 @@ def message $ {}
 
 def store $ {}
   :state state
-  :channels (:channels database)
+  :channels $ []
   :router $ {}
     :name :home
     :data $ {}
+
+def modal $ {}
+  :id nil
+  :name nil
+  :data nil

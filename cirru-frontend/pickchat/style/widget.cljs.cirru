@@ -18,15 +18,17 @@ def button $ {}
   :outline |none
 
 def textbox $ {}
-  :display |inline-block
+  :display :inline-block
   :line-height |30px
+  :height 30
   :color $ hsl 0 0 20
   :width :300px
   :padding "|0 10px"
   :font-size |14px
-  :border |none
+  :border :none
   :background-color $ hsl 0 0 96
-  :outline |none
+  :outline :none
+  :resize :none
 
 def icon $ {}
   :width 20
@@ -49,3 +51,6 @@ def message-box $ {}
   :font-size 16
   :font-family "|Verdana"
   :padding "|4px 8px"
+
+def login-textbox $ merge textbox $ {}
+  :width |100%

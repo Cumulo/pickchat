@@ -67,3 +67,11 @@ def body-body $ merge flex
 def body-footer $ merge row $ {}
   :height 60
   :background-color $ hsl 0 0 80
+
+def login-column $ merge column $ {}
+  :background-color $ hsl 0 60 80
+  :width 320
+  :padding "|40px"
+
+def action-bar $ merge row $ {}
+  :justify-content :flex-end

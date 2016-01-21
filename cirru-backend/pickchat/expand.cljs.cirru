@@ -5,7 +5,11 @@ ns pickchat.expand
     [] pickchat.schema :as schema
 
 defn expand (db state-id)
-  assoc schema/store
-    , :state $ get-in db $ [] :states state-id
-    , :tasks $ :tasks db
-    , :users $ :users db
+  let
+      state $ get-in db $ [] :states state-id
+    if (string? (:user-id state))
+      assoc schema/store
+        , :state state
+      assoc schema/store
+        , :state state
+        , :users $ :users db

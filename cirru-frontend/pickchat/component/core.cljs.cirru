@@ -2,20 +2,12 @@
 ns pickchat.component.core
   :require
     [] reagent.core :as r
+    [] pickchat.component.welcome-page :refer
+      [] welcome-page
+    [] pickchat.component.module :refer
+      [] vspace hspace
     [] pickchat.style.layout :as la
     [] pickchat.style.widget :as wi
-
-defn task (task)
-
-defn hspace (x)
-  [] :div
-    {} :style
-      merge la/hspace $ {} :width x
-
-defn vspace (x)
-  [] :div
-    {} :style
-      merge la/vspace $ {} :height x
 
 defn message-box ()
   let
@@ -51,12 +43,9 @@ defn page ()
       on-draft-change $ fn (event)
         reset! draft (-> event .-target .-value)
     fn (store send)
-      println store
       let
-          on-create $ fn (event)
-            if (> (count @draft) 0)
-              do
-                send :task/create @draft
-                reset! draft |
+          user-id $ get-in store $ [] :state :user-id
         [] :div ({} :style la/fullscreen)
-          [] work-page send
+          if (string? user-id)
+            [] work-page send
+            [] welcome-page send

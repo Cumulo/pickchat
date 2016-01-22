@@ -12,11 +12,13 @@ def database $ {}
 def state $ {}
   :user-id nil
   :modals $ []
+  :notifications $ []
 
 def user $ {}
   :id nil
   :name nil
   :avatar nil
+  :password nil
 
 def channel $ {}
   :id nil
@@ -42,3 +44,8 @@ def modal $ {}
   :id nil
   :name nil
   :data nil
+
+def notification $ {}
+  :id nil
+  :type :info
+  :text nil

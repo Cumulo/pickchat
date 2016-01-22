@@ -16,9 +16,12 @@ defn login-column (send)
       update-password $ fn (event)
         reset! password $ -> event .-target .-value
       submit $ fn (event)
-        send :user/login $ {} :username @username :password @password
-        reset! username |
-        reset! password |
+        if
+          and (> (count @username) 0) (> (count @password) 0)
+          do
+            send :user/login $ {} :username @username :password @password
+            reset! username |
+            reset! password |
     fn (send)
       [] :div ({} :style la/login-column)
         [] :textarea $ {} :style wi/login-textbox :placeholder |Username :value @username :on-change update-name

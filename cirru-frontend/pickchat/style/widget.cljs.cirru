@@ -54,3 +54,6 @@ def message-box $ {}
 
 def login-textbox $ merge textbox $ {}
   :width |100%
+
+def notice $ {}
+  :background-color $ hsl 0 0 80

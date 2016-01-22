@@ -75,3 +75,5 @@ def login-column $ merge column $ {}
 
 def action-bar $ merge row $ {}
   :justify-content :flex-end
+
+def noop $ {}

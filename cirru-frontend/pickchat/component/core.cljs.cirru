@@ -25,19 +25,23 @@ defn message-box ()
                 reset! text |
         [] :textarea $ {} :style wi/message-box :placeholder "|Say something" :value @text :on-change on-change :on-key-down on-key-down
 
-defn work-page ()
-  fn (send)
-    [] :div ({} :style la/app)
-      [] :div ({} :style la/sidebar)
-        [] :div ({} :style la/sidebar-header)
-        [] :div ({} :style la/sidebar-body)
-      [] :div ({} :style la/body)
-        [] :div ({} :style la/body-header)
-        [] :div ({} :style la/body-body)
-        [] :div ({} :style la/body-footer)
-          [] message-box send
+defn work-page (send)
+  let
+      on-logout $ fn (event)
+        send :user/logout
+    fn (send)
+      [] :div ({} :style la/app)
+        [] :div ({} :style la/sidebar)
+          [] :div ({} :style la/sidebar-header)
+          [] :div ({} :style la/sidebar-body)
+        [] :div ({} :style la/body)
+          [] :div ({} :style la/body-header)
+            [] :div ({} :style la/header-cornor :on-click on-logout)
+          [] :div ({} :style la/body-body)
+          [] :div ({} :style la/body-footer)
+            [] message-box send
 
-defn page ()
+defn page (store send)
   let
       draft $ r/atom |
       on-draft-change $ fn (event)

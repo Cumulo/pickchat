@@ -42,3 +42,8 @@ defn signup (db action-data action-meta)
         assoc-in ([] :users user-id)
           assoc schema/user :id user-id :username (:username action-data) :password (:password action-data)
         assoc-in ([] :states state-id :user-id) user-id
+
+defn logout (db action-data action-meta)
+  let
+      state-id $ :state-id action-meta
+    assoc-in db ([] :states state-id :user-id) nil

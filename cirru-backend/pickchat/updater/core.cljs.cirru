@@ -13,6 +13,7 @@ defn updater (db action-type action-data action-meta)
 
         :user/login up-user/login
         :user/signup up-user/signup
+        :user/logout up-user/logout
 
         , identity
     handler db action-data action-meta

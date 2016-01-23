@@ -58,7 +58,7 @@ def app $ merge row $ {}
 def body $ merge flex column $ {}
   :background-color $ hsl 0 0 94
 
-def body-header $ {}
+def body-header $ merge row $ {}
   :height 60
   :background-color $ hsl 0 0 80
 
@@ -77,3 +77,7 @@ def action-bar $ merge row $ {}
   :justify-content :flex-end
 
 def noop $ {}
+
+def header-cornor $ {}
+  :width |40px
+  :background-color $ hsl 0 0 30

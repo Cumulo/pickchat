@@ -16,7 +16,7 @@ def state $ {}
 
 def user $ {}
   :id nil
-  :name nil
+  :username nil
   :avatar nil
   :password nil
 

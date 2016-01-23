@@ -22,7 +22,6 @@ def wss $ new WebSocketServer (js-obj |port 4005)
   let
       state-id $ .generate shortid
       now $ new js/Date
-    .log js/console "|new connection"
     go
       >! receive-chan $ {}
         :type :state/connect
@@ -51,6 +50,5 @@ def wss $ new WebSocketServer (js-obj |port 4005)
 go $ loop ([]) $ let
     msg-pack $ <! send-chan
     socket $ get @socket-registry (:target msg-pack)
-  println |changes msg-pack
   .send socket $ pr-str (:changes msg-pack)
   recur

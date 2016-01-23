@@ -16,6 +16,7 @@ def button $ {}
   :border-radius 15
   :cursor |pointer
   :outline |none
+  :font-family "|Verdana"
 
 def textbox $ {}
   :display :inline-block

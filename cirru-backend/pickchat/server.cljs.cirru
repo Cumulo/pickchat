@@ -27,7 +27,8 @@ defonce client-caches $ atom $ {}
 go $ loop ([]) $ let
     msg (<! ws-server/receive-chan)
     new-data $ updater @data-center (:type msg) (:data msg) (:meta msg)
-  println :msg msg
+  println "|-->" (:type msg) (:data msg)
+  println "|∆=db" $ differ/diff @data-center new-data
   doseq
     [] state-entry (:states new-data)
     let
@@ -35,7 +36,7 @@ go $ loop ([]) $ let
         new-store $ expand new-data state-id
         old-store $ or (get @client-caches state-id) ({})
         changes $ differ/diff old-store new-store
-      println "|∆" changes
+      println "|∆=client" state-id changes
       >! ws-server/send-chan $ {} :target state-id :changes changes
       swap! client-caches assoc state-id new-store
   reset! data-center new-data

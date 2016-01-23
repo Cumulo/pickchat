@@ -33,7 +33,7 @@ go $ loop ([])
   let
       changes $ <! ws-client/receive-chan
     reset! data-center $ differ/patch @data-center changes
-    .info js/console @data-center
     .info js/console "|∆" changes
+    .info js/console @data-center
     mountit
     recur

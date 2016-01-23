@@ -17,7 +17,7 @@ defn login-column (send)
         reset! password $ -> event .-target .-value
       submit $ fn (event)
         if
-          and (> (count @username) 0) (> (count @password) 0)
+          > (count @username) 0
           do
             send :user/login $ {} :username @username :password @password
             reset! username |
@@ -29,7 +29,7 @@ defn login-column (send)
         [] :textarea $ {} :style wi/login-textbox :placeholder |Password :value @password :on-change update-password
         vspace 20
         [] :div ({} :style la/action-bar)
-          [] :div ({} :style wi/button) |Submit
+          [] :div ({} :style wi/button :on-click submit) "|Log in"
 
 defn signup-column (send)
   let
@@ -40,9 +40,12 @@ defn signup-column (send)
       update-password $ fn (event)
         reset! password $ -> event .-target .-value
       submit $ fn (event)
-        send :user/signup $ {} :username @username :password @password
-        reset! username |
-        reset! password |
+        if
+          > (count @username) 0
+          do
+            send :user/signup $ {} :username @username :password @password
+            reset! username |
+            reset! password |
     fn (send)
       [] :div ({} :style la/login-column)
         [] :textarea $ {} :style wi/login-textbox :placeholder |Username :value @username :on-change update-name
@@ -50,7 +53,7 @@ defn signup-column (send)
         [] :textarea $ {} :style wi/login-textbox :placeholder |Password :value @password :on-change update-password
         vspace 20
         [] :div ({} :style la/action-bar)
-          [] :div ({} :style wi/button) |Submit
+          [] :div ({} :style wi/button :on-click submit) "|Sign up"
 
 defn welcome-page (send)
   fn (send)

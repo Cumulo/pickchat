@@ -10,6 +10,8 @@ ns pickchat.component.core
     [] pickchat.style.widget :as wi
     [] pickchat.component.notifications :refer
       [] notifications
+    [] pickchat.component.modal :refer
+      [] modal-stack
 
 defn message-box ()
   let
@@ -29,8 +31,8 @@ defn message-box ()
 
 defn work-page (send)
   let
-      on-logout $ fn (event)
-        send :user/logout
+      check-profile $ fn (event)
+        send :modal/add $ {} :name :profile :type :modal
     fn (send)
       [] :div ({} :style la/app)
         [] :div ({} :style la/sidebar)
@@ -38,7 +40,7 @@ defn work-page (send)
           [] :div ({} :style la/sidebar-body)
         [] :div ({} :style la/body)
           [] :div ({} :style la/body-header)
-            [] :div ({} :style la/header-cornor :on-click on-logout)
+            [] :div ({} :style la/header-cornor :on-click check-profile)
           [] :div ({} :style la/body-body)
           [] :div ({} :style la/body-footer)
             [] message-box send
@@ -56,3 +58,4 @@ defn page (store send)
             [] work-page send
             [] welcome-page send
           [] notifications (get-in store $ [] :state :notifications) send
+          [] modal-stack (get-in store $ [] :state :modals) store send

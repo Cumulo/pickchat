@@ -4,6 +4,7 @@ ns pickchat.updater.core
     [] cljs.nodejs :as nodejs
     [] pickchat.updater.state :as up-state
     [] pickchat.updater.user :as up-user
+    [] pickchat.updater.modal :as up-modal
 
 defn updater (db action-type action-data action-meta)
   let
@@ -15,6 +16,10 @@ defn updater (db action-type action-data action-meta)
         :user/login up-user/login
         :user/signup up-user/signup
         :user/logout up-user/logout
+
+        :modal/add up-modal/add
+        :modal/remove-one up-modal/remove-one
+        :modal/hit-card up-modal/hit-card
 
         , identity
     handler db action-data action-meta

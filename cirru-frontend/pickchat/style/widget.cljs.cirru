@@ -3,6 +3,7 @@ ns pickchat.style.widget
   :require
     [] reagent.core :as r
     [] hsl.core :refer $ [] hsl
+    [] pickchat.style.layout :as la
 
 def button $ {}
   :display |inline-block
@@ -68,3 +69,11 @@ defn notice-by (index) $ {}
 
 def notice-text $ {}
   :color :white
+
+def modal-container $ merge la/fullscreen la/center $ {}
+  :background-color $ hsl 0 0 30 0.6
+
+def modal-card $ {}
+  :min-width 400
+  :min-height 200
+  :background-color :white

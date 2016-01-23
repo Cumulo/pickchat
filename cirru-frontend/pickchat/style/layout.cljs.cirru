@@ -81,3 +81,9 @@ def noop $ {}
 def header-cornor $ {}
   :width |40px
   :background-color $ hsl 0 0 30
+
+def center $ {}
+  :display :flex
+  :flex-direction :row
+  :align-items :center
+  :justify-content :center

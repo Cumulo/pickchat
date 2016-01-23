@@ -13,6 +13,7 @@ def state $ {}
   :user-id nil
   :modals $ []
   :notifications $ []
+  :user nil
 
 def user $ {}
   :id nil
@@ -42,6 +43,7 @@ def store $ {}
 
 def modal $ {}
   :id nil
+  :type nil
   :name nil
   :data nil
 

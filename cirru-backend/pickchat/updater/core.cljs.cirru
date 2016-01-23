@@ -10,6 +10,7 @@ defn updater (db action-type action-data action-meta)
       handler $ case action-type
         :state/connect up-state/connect
         :state/disconnect up-state/disconnect
+        :state/read-notice up-state/read-notice
 
         :user/login up-user/login
         :user/signup up-user/signup

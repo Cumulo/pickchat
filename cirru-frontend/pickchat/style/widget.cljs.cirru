@@ -56,5 +56,15 @@ def message-box $ {}
 def login-textbox $ merge textbox $ {}
   :width |100%
 
-def notice $ {}
-  :background-color $ hsl 0 0 80
+defn notice-by (index) $ {}
+  :background-color $ hsl 0 80 80
+  :position :absolute
+  :right 10
+  :top $ + 10 $ * index 70
+  :height 60
+  :width 240
+  :padding "|10px"
+  :cursor :pointer
+
+def notice-text $ {}
+  :color :white

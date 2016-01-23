@@ -1,16 +1,21 @@
 
-ns pickchat.component.notificaitons
+ns pickchat.component.notifications
   :require
     [] pickchat.style.layout :as la
     [] pickchat.style.widget :as wi
 
-defn notice (send)
-  fn (send index)
-    [] :div ({} :style wi/notice)
+defn notice (item index send)
+  let
+      read $ fn (event)
+        send :state/read-notice (:id item)
+    [] :div ({} :style (wi/notice-by index) :key (:id item))
+      [] :div ({} :style wi/notice-text :on-click read) (:text item)
 
-defn notificaitons (send)
-  fn (send)
+defn notifications (data send)
+  fn (data send)
+    println :data data
     [] :div ({} :style la/noop)
       map-indexed
         fn (index item)
-          [] :div ({})
+          notice item index send
+        , data

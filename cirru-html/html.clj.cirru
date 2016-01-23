@@ -10,6 +10,7 @@ defn render (data)
           {} (:type |text/css) (:href |css/style.css) (:rel |stylesheet)
         [] :link
           {} (:type |image/png) (:rel |icon) (:href |images/discourse.png)
+        [] :style nil "|body * {box-sizing: border-box;}"
       [] :body
         [] :div#app
         [] :script

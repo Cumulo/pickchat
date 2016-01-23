@@ -8,6 +8,8 @@ ns pickchat.component.core
       [] vspace hspace
     [] pickchat.style.layout :as la
     [] pickchat.style.widget :as wi
+    [] pickchat.component.notifications :refer
+      [] notifications
 
 defn message-box ()
   let
@@ -53,3 +55,4 @@ defn page (store send)
           if (string? user-id)
             [] work-page send
             [] welcome-page send
+          [] notifications (get-in store $ [] :state :notifications) send

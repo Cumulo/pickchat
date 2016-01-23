@@ -16,13 +16,13 @@ defn login (db action-data action-meta)
             = (:username user) (:username action-data)
             = (:password user) (:password action-data)
       maybe-user $ first maybe-users
-    println maybe-users maybe-user
     if (some? maybe-user)
       assoc-in db ([] :states state-id :user-id) (:id maybe-user)
       update-in db ([] :states state-id :notifications)
         fn (notifications)
           conj notifications
-            assoc schema/notification :id (:id action-meta) :text "|no user"
+            assoc schema/notification :id (:id action-meta) :text
+              str "|no user named " (:username action-data)
 
 defn signup (db action-data action-meta)
   let

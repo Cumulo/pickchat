@@ -101,4 +101,4 @@ def form-value $ {}
 def header-title $ merge flex center $ {}
 
 def message-list $ merge column flex $ {}
-  :margin "|200px 0"
+  :margin "|200px 0 400px"

@@ -21,7 +21,6 @@ def button $ {}
 
 def textbox $ {}
   :display :inline-block
-  :line-height |30px
   :height 30
   :color $ hsl 0 0 20
   :width :300px
@@ -83,7 +82,6 @@ def modal-card $ {}
 
 def form-textbox $ merge textbox $ {}
   :height |30px
-  :line-height |30px
 
 def avatar $ {}
   :width 120

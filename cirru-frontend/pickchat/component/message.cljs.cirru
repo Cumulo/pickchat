@@ -6,20 +6,31 @@ ns pickchat.component.message
     [] pickchat.style.widget :as wi
     [] pickchat.component.module :refer
       [] vspace hspace
+    [] cljs.core.async :as a :refer
+      [] >! <! chan
+  :require-macros
+    [] cljs.core.async.macros :refer
+      [] go
 
-defn message-box ()
+defn message-box (dirty-chan send)
   let
       text $ r/atom |
       on-change $ fn (event)
         reset! text (-> event .-target .-value)
-    fn (send)
+    fn (dirty-chan send)
       let
           on-key-down $ fn (event)
             if (= (.-keyCode event) 13)
-              do
-                send :message/create @text
-                .preventDefault event
-                reset! text |
+              if (> (count @text) 0)
+                do
+                  send :message/create @text
+                  .preventDefault event
+                  reset! text |
+                do
+                  .preventDefault event
+                  let
+                      target $ .querySelector js/document "|#scroll"
+                    set! (.-scrollTop target) (.-scrollHeight target)
         [] :textarea $ {} :style wi/message-box :placeholder "|Say something"
           , :value @text :on-change on-change :on-key-down on-key-down
 
@@ -29,7 +40,7 @@ defn message-item (message user send)
     hspace 10
     [] :div ({}) (:text message)
 
-defn message-list (messages store send)
+defn message-list (messages store dirty-chan send)
   [] :div ({} :style la/message-list)
     ->> messages
       map $ fn (message)

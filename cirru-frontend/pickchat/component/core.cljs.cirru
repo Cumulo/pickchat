@@ -14,6 +14,11 @@ ns pickchat.component.core
       [] modal-stack
     [] pickchat.component.message :refer
       [] message-box message-list
+    [] cljs.core.async :as a :refer
+      [] >! <! chan
+  :require-macros
+    [] cljs.core.async.macros :refer
+      [] go
 
 defn channel-list (channels send)
   [] :div ({} :style la/column)
@@ -43,6 +48,7 @@ defn work-page (store send)
           channels $ :channels store
           channel-id $ get-in store $ [] :state :channel-id
           user $ :user store
+          dirty-chan $ chan
         [] :div ({} :style la/app)
           [] :div ({} :style la/sidebar)
             [] :div ({} :style la/sidebar-header)
@@ -61,12 +67,12 @@ defn work-page (store send)
               [] :div ({} :style la/header-cornor :on-click check-profile)
                 [] :div ({} :style (wi/main-avatar (:avatar user)))
             hr
-            [] :div ({} :style la/body-body)
-              message-list (:seen-messages store) store send
+            [] :div ({} :style la/body-body :id :scroll)
+              message-list (:seen-messages store) store dirty-chan send
             hr
             if (some? channel-id)
               [] :div ({} :style la/body-footer)
-                [] message-box send
+                [] message-box dirty-chan send
 
 defn page (store send)
   let

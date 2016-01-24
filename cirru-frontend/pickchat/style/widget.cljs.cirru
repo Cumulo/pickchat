@@ -79,7 +79,25 @@ def modal-card $ {}
   :background-color :white
 
 def form-textbox $ merge textbox $ {}
+  :height |30px
+  :line-height |30px
 
 def avatar $ {}
   :width 120
   :height 120
+
+def entry-icon $ merge la/row la/center $ {}
+  :width |30px
+  :height |30px
+  :background-color $ hsl 0 0 94
+  :font-size 20
+  :cursor :pointer
+
+def channel $ {}
+  :line-height |30px
+  :padding |10px
+  :font-size 16
+  :font-family "|Verdana"
+  :border-bottom $ str "|1px solid " (hsl 0 0 80)
+  :cursor :pointer
+

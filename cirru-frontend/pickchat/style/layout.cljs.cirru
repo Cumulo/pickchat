@@ -33,6 +33,12 @@ def column $ {}
 def flex $ {}
   :flex 1
 
+def center $ {}
+  :display :flex
+  :flex-direction :row
+  :align-items :center
+  :justify-content :center
+
 def center-content $ merge row $ {}
   :justify-content |center
   :padding |40px
@@ -41,7 +47,7 @@ def sidebar $ merge column $ {}
   :width |300px
   :background-color $ hsl 0 0 90
 
-def sidebar-header $ {}
+def sidebar-header $ merge row center $ {}
   :height 60
   :background-color $ hsl 0 0 70
 
@@ -81,12 +87,6 @@ def noop $ {}
 def header-cornor $ {}
   :width |40px
   :background-color $ hsl 0 0 30
-
-def center $ {}
-  :display :flex
-  :flex-direction :row
-  :align-items :center
-  :justify-content :center
 
 def form $ merge column $ {}
   :padding "|20px"

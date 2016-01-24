@@ -5,6 +5,7 @@ ns pickchat.updater.core
     [] pickchat.updater.state :as up-state
     [] pickchat.updater.user :as up-user
     [] pickchat.updater.modal :as up-modal
+    [] pickchat.updater.channel :as up-channel
 
 defn updater (db action-type action-data action-meta)
   let
@@ -23,6 +24,8 @@ defn updater (db action-type action-data action-meta)
         :modal/add up-modal/add
         :modal/remove-one up-modal/remove-one
         :modal/hit-card up-modal/hit-card
+
+        :channel/create up-channel/create
 
         , identity
     handler db action-data action-meta

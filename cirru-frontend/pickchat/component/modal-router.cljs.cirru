@@ -17,8 +17,8 @@ defn render-profile (modal-data store send)
       on-avatar-change $ fn (text)
         send :user/avatar $ {} :id (:id user) :avatar text
       on-logout $ fn (event)
-        send :user/logout
         send :modal/remove-one (:id modal-data)
+        send :user/logout
     [] :div ({} :style la/form)
       [] :div ({} :style la/form-line)
         [] :div ({} :style la/form-field) |Username
@@ -40,7 +40,25 @@ defn render-profile (modal-data store send)
         [] :div ({} :style la/form-value)
           [] :div ({} :style wi/button :on-click on-logout) |Logout
 
+defn render-create-channel (modal-data store send)
+  let
+      text $ r/atom |
+      on-change $ fn (event)
+        println :change  $ -> event (.-target) (.-value)
+        reset! text $ -> event (.-target) (.-value)
+      submit $ fn (event)
+        send :channel/create @text
+        send :modal/remove-one (:id modal-data)
+    fn (modal-data store send)
+      [] :div ({} :style la/form)
+        [] :div ({} :style la/form-line)
+          [] :div ({} :style la/form-field) |Topic
+          [] :input $ {} :style wi/form-textbox :on-change on-change :value @text :placeholder |Topic
+        [] :div ({} :style la/action-bar)
+          [] :div ({} :style wi/button :on-click submit) |Submit
+
 defn renderer (modal-data store send)
   case (:name modal-data)
-    :profile $ render-profile (:data modal-data) store send
+    :profile $ render-profile modal-data store send
+    :create-channel $ [] render-create-channel modal-data store send
     [] :div nil (pr-str modal-data)

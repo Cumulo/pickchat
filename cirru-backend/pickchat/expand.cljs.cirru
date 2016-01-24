@@ -12,5 +12,6 @@ defn expand (db state-id)
         , :state state
         , :users $ :users db
         , :user $ get-in db $ [] :users (:user-id state)
+        , :channels $ :channels db
       assoc schema/store
         , :state state

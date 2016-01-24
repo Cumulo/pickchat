@@ -34,10 +34,12 @@ def message $ {}
   :id nil
   :text nil
   :time nil
+  :channel-id nil
   :author-id nil
 
 def store $ {}
   :state state
+  :channel-id nil
   :channels $ []
   :router $ {}
     :name :home

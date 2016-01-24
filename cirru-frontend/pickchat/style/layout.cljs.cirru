@@ -68,7 +68,8 @@ def body-header $ merge row $ {}
   :height 60
   :background-color $ hsl 0 0 80
 
-def body-body $ merge flex
+def body-body $ merge flex $ {}
+  :overflow-y :auto
 
 def body-footer $ merge row $ {}
   :height 60
@@ -98,3 +99,8 @@ def form-field $ {}
   :width |100px
 
 def form-value $ {}
+
+def header-title $ merge flex $ {}
+
+def message-list $ merge column flex $ {}
+  :margin "|200px 0"

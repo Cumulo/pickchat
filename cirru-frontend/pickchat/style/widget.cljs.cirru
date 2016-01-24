@@ -101,3 +101,13 @@ def channel $ {}
   :border-bottom $ str "|1px solid " (hsl 0 0 80)
   :cursor :pointer
 
+def message $ merge la/row $ {}
+  :padding "|10px"
+
+defn message-avatar (url) $ {}
+  :width 40
+  :height 40
+  :border-radius 20
+  :background-color $ hsl 0 0 90
+  :background-size :cover
+  :background-image $ str "|url(" url "|)"

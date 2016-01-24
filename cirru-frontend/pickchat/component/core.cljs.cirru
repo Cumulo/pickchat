@@ -12,23 +12,8 @@ ns pickchat.component.core
       [] notifications
     [] pickchat.component.modal :refer
       [] modal-stack
-
-defn message-box ()
-  let
-      text $ r/atom |
-      on-change $ fn (event)
-        reset! text (-> event .-target .-value)
-    fn (send)
-      let
-          on-key-down $ fn (event)
-            if (= (.-keyCode event) 13)
-              do
-                send :message/create @text
-                .preventDefault event
-                reset! text |
-        [] :textarea $ {} :style wi/message-box :placeholder "|Say something"
-          , :value @text :on-change on-change :on-key-down on-key-down
-
+    [] pickchat.component.message :refer
+      [] message-box message-list
 
 defn channel-list (channels send)
   [] :div ({} :style la/column)
@@ -36,7 +21,9 @@ defn channel-list (channels send)
       map $ fn (channel-entry)
         let
             channel $ last channel-entry
-          [] :div ({} :style wi/channel :key (:id channel)) (:title channel)
+            switch-channel $ fn (event)
+              send :channel/enter (:id channel)
+          [] :div ({} :style wi/channel :key (:id channel) :on-click switch-channel) (:title channel)
 
 defn work-page (store send)
   let
@@ -44,19 +31,31 @@ defn work-page (store send)
         send :modal/add $ {} :name :profile :type :modal
       create-channel $ fn (event)
         send :modal/add $ {} :name :create-channel :type :modal
-    fn (send)
-      [] :div ({} :style la/app)
-        [] :div ({} :style la/sidebar)
-          [] :div ({} :style la/sidebar-header)
-            [] :div ({} :style wi/entry-icon :on-click create-channel) |+
-          [] :div ({} :style la/sidebar-body)
-            channel-list (:channels store) send
-        [] :div ({} :style la/body)
-          [] :div ({} :style la/body-header)
-            [] :div ({} :style la/header-cornor :on-click check-profile)
-          [] :div ({} :style la/body-body)
-          [] :div ({} :style la/body-footer)
-            [] message-box send
+      go-home $ fn (event)
+        send :channel/leave
+    fn (store send)
+      let
+          channels $ :channels store
+          channel-id $ get-in store $ [] :state :channel-id
+        [] :div ({} :style la/app)
+          [] :div ({} :style la/sidebar)
+            [] :div ({} :style la/sidebar-header)
+              [] :div ({} :style wi/entry-icon :on-click go-home) |Home
+              hspace 10
+              [] :div ({} :style wi/entry-icon :on-click create-channel) |＋
+            [] :div ({} :style la/sidebar-body)
+              channel-list (:channels store) send
+          [] :div ({} :style la/body)
+            [] :div ({} :style la/body-header)
+              if (some? channel-id)
+                [] :div ({} :style la/header-title) (get-in channels $ [] channel-id :title)
+                [] :div ({} :style la/header-title) "|No channel selected"
+              [] :div ({} :style la/header-cornor :on-click check-profile)
+            [] :div ({} :style la/body-body)
+              message-list (:seen-messages store) store send
+            if (some? channel-id)
+              [] :div ({} :style la/body-footer)
+                [] message-box send
 
 defn page (store send)
   let

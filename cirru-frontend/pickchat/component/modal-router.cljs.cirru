@@ -44,7 +44,6 @@ defn render-create-channel (modal-data store send)
   let
       text $ r/atom |
       on-change $ fn (event)
-        println :change  $ -> event (.-target) (.-value)
         reset! text $ -> event (.-target) (.-value)
       submit $ fn (event)
         send :channel/create @text

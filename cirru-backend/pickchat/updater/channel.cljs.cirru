@@ -11,3 +11,9 @@ defn create (db action-data action-meta)
     assoc-in db ([] :channels channel-id)
       assoc schema/channel :id channel-id :title action-data
         , :author-id user-id :member-ids ([] user-id) :time (:time action-meta)
+
+defn leave (db action-data action-meta)
+  assoc-in db ([] :states (:state-id action-meta) :channel-id) nil
+
+defn enter (db action-data action-meta)
+  assoc-in db ([] :states (:state-id action-meta) :channel-id) action-data

@@ -77,3 +77,9 @@ def modal-card $ {}
   :min-width 400
   :min-height 200
   :background-color :white
+
+def form-textbox $ merge textbox $ {}
+
+def avatar $ {}
+  :width 120
+  :height 120

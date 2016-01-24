@@ -47,3 +47,24 @@ defn logout (db action-data action-meta)
   let
       state-id $ :state-id action-meta
     assoc-in db ([] :states state-id :user-id) nil
+
+defn username (db action-data action-meta)
+  let
+      user-id $ :id action-data
+    -> db
+      assoc-in ([] :users user-id :time) (:time action-meta)
+      assoc-in ([] :users user-id :username) (:username action-data)
+
+defn password (db action-data action-meta)
+  let
+      user-id $ :id action-data
+    -> db
+      assoc-in ([] :users user-id :time) (:time action-meta)
+      assoc-in ([] :users user-id :password) (:password action-data)
+
+defn avatar (db action-data action-meta)
+  let
+      user-id $ :id action-data
+    -> db
+      assoc-in ([] :users user-id :time) (:time action-meta)
+      assoc-in ([] :users user-id :avatar) (:avatar action-data)

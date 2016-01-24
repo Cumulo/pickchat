@@ -87,3 +87,14 @@ def center $ {}
   :flex-direction :row
   :align-items :center
   :justify-content :center
+
+def form $ merge column $ {}
+  :padding "|20px"
+
+def form-line $ merge row $ {}
+  :margin-bottom |10px
+
+def form-field $ {}
+  :width |100px
+
+def form-value $ {}

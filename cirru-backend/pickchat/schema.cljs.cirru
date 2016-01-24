@@ -20,6 +20,7 @@ def user $ {}
   :username nil
   :avatar nil
   :password nil
+  :time 0
 
 def channel $ {}
   :id nil

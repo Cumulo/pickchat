@@ -45,13 +45,12 @@ def center-content $ merge row $ {}
 
 def sidebar $ merge column $ {}
   :width |300px
-  :background-color $ hsl 0 0 90
 
 def sidebar-header $ merge row center $ {}
   :height 60
-  :background-color $ hsl 0 0 70
 
-def sidebar-body $ merge flex
+def sidebar-body $ merge flex $ {}
+  :overflow-y :auto
 
 def app $ merge row $ {}
   :flex-shrink 0
@@ -62,11 +61,10 @@ def app $ merge row $ {}
   :height |100%
 
 def body $ merge flex column $ {}
-  :background-color $ hsl 0 0 94
 
-def body-header $ merge row $ {}
+def body-header $ merge row center $ {}
   :height 60
-  :background-color $ hsl 0 0 80
+  :font-family "|Helvetica Neue Light, Century Gothic"
 
 def body-body $ merge flex $ {}
   :overflow-y :auto
@@ -87,7 +85,7 @@ def noop $ {}
 
 def header-cornor $ {}
   :width |40px
-  :background-color $ hsl 0 0 30
+  :cursor :pointer
 
 def form $ merge column $ {}
   :padding "|20px"
@@ -100,7 +98,7 @@ def form-field $ {}
 
 def form-value $ {}
 
-def header-title $ merge flex $ {}
+def header-title $ merge flex center $ {}
 
 def message-list $ merge column flex $ {}
   :margin "|200px 0"

@@ -18,6 +18,12 @@ defn vspace (x)
 defn get-time-value ()
   .valueOf (new js/Date)
 
+defn hr ()
+  [] :div $ {} :style wi/hr
+
+defn vr ()
+  [] :div $ {} :style wi/vr
+
 defn imput (props)
   let
       text $ r/atom |

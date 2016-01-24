@@ -45,6 +45,7 @@ def icon $ {}
   :background-color $ hsl 0 80 90
   :border-radius 10
   :cursor |pointer
+  :font-family "|Helvetica Neue Light, Century Gothic"
 
 def message-box $ {}
   :flex 1
@@ -77,6 +78,8 @@ def modal-card $ {}
   :min-width 400
   :min-height 200
   :background-color :white
+  :flex-shrink 0
+  :margin :auto
 
 def form-textbox $ merge textbox $ {}
   :height |30px
@@ -87,22 +90,25 @@ def avatar $ {}
   :height 120
 
 def entry-icon $ merge la/row la/center $ {}
-  :width |30px
+  :width :auto
   :height |30px
   :background-color $ hsl 0 0 94
   :font-size 20
   :cursor :pointer
+  :padding "|0 10px"
+  :font-family "|Helvetica Neue Light, Century Gothic"
 
 def channel $ {}
   :line-height |30px
   :padding |10px
   :font-size 16
   :font-family "|Verdana"
-  :border-bottom $ str "|1px solid " (hsl 0 0 80)
+  :border-bottom $ str "|1px solid " (hsl 0 0 90)
   :cursor :pointer
 
 def message $ merge la/row $ {}
   :padding "|10px"
+  :font-family "|Verdana"
 
 defn message-avatar (url) $ {}
   :width 40
@@ -111,3 +117,21 @@ defn message-avatar (url) $ {}
   :background-color $ hsl 0 0 90
   :background-size :cover
   :background-image $ str "|url(" url "|)"
+
+defn main-avatar (url) $ {}
+  :width 40
+  :height 40
+  :border-radius 20
+  :background-color $ hsl 0 0 90
+  :background-size :cover
+  :background-image $ str "|url(" url "|)"
+
+def hr $ {}
+  :width |100%
+  :height |1px
+  :background-color $ hsl 0 0 90
+
+def vr $ {}
+  :width 1
+  :height |100%
+  :background-color $ hsl 0 0 90

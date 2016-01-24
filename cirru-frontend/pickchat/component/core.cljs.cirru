@@ -5,7 +5,7 @@ ns pickchat.component.core
     [] pickchat.component.welcome-page :refer
       [] welcome-page
     [] pickchat.component.module :refer
-      [] vspace hspace
+      [] vspace hspace hr vr
     [] pickchat.style.layout :as la
     [] pickchat.style.widget :as wi
     [] pickchat.component.notifications :refer
@@ -18,9 +18,14 @@ ns pickchat.component.core
 defn channel-list (channels send)
   [] :div ({} :style la/column)
     ->> channels
-      map $ fn (channel-entry)
+      map last
+      sort $ fn (chan-a chan-b)
+        cond
+          (< (:time chan-a) (:time chan-b)) 1
+          (> (:time chan-a) (:time chan-b)) -1
+          :else 0
+      map $ fn (channel)
         let
-            channel $ last channel-entry
             switch-channel $ fn (event)
               send :channel/enter (:id channel)
           [] :div ({} :style wi/channel :key (:id channel) :on-click switch-channel) (:title channel)
@@ -37,22 +42,28 @@ defn work-page (store send)
       let
           channels $ :channels store
           channel-id $ get-in store $ [] :state :channel-id
+          user $ :user store
         [] :div ({} :style la/app)
           [] :div ({} :style la/sidebar)
             [] :div ({} :style la/sidebar-header)
               [] :div ({} :style wi/entry-icon :on-click go-home) |Home
               hspace 10
               [] :div ({} :style wi/entry-icon :on-click create-channel) |＋
+            hr
             [] :div ({} :style la/sidebar-body)
               channel-list (:channels store) send
+          vr
           [] :div ({} :style la/body)
             [] :div ({} :style la/body-header)
               if (some? channel-id)
                 [] :div ({} :style la/header-title) (get-in channels $ [] channel-id :title)
                 [] :div ({} :style la/header-title) "|No channel selected"
               [] :div ({} :style la/header-cornor :on-click check-profile)
+                [] :div ({} :style (wi/main-avatar (:avatar user)))
+            hr
             [] :div ({} :style la/body-body)
               message-list (:seen-messages store) store send
+            hr
             if (some? channel-id)
               [] :div ({} :style la/body-footer)
                 [] message-box send

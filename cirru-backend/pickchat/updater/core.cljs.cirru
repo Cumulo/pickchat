@@ -16,7 +16,7 @@ defn updater (db action-type action-data action-meta)
         :user/login up-user/login
         :user/signup up-user/signup
         :user/logout up-user/logout
-        :user/username up-user/username
+        :user/nickname up-user/nickname
         :user/password up-user/password
         :user/avatar up-user/avatar
 

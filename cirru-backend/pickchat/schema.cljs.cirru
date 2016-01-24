@@ -18,6 +18,7 @@ def state $ {}
 def user $ {}
   :id nil
   :username nil
+  :nickname nil
   :avatar nil
   :password nil
   :time 0

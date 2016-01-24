@@ -37,10 +37,11 @@ defn signup (db action-data action-meta)
       update-in db ([] :states state-id :notifications)
         fn (notifications)
           conj notifications
-            assoc schema/notification :id (:id action-data) :text "|name is taken"
+            assoc schema/notification :id (:id action-meta) :text "|name is taken"
       -> db
         assoc-in ([] :users user-id)
-          assoc schema/user :id user-id :username (:username action-data) :password (:password action-data)
+          assoc schema/user :id user-id :username (:username action-data)
+            , :password (:password action-data) :nickname (:username action-data)
         assoc-in ([] :states state-id :user-id) user-id
 
 defn logout (db action-data action-meta)
@@ -48,12 +49,12 @@ defn logout (db action-data action-meta)
       state-id $ :state-id action-meta
     assoc-in db ([] :states state-id :user-id) nil
 
-defn username (db action-data action-meta)
+defn nickname (db action-data action-meta)
   let
       user-id $ :id action-data
     -> db
       assoc-in ([] :users user-id :time) (:time action-meta)
-      assoc-in ([] :users user-id :username) (:username action-data)
+      assoc-in ([] :users user-id :nickname) (:nickname action-data)
 
 defn password (db action-data action-meta)
   let

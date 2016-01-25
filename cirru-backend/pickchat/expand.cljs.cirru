@@ -14,7 +14,17 @@ defn expand (db state-id)
         , :state state
         , :users $ :users db
         , :user $ get-in db $ [] :users (:user-id state)
-        , :channels $ :channels db
+        , :channels $ ->> (:channels db)
+          map $ fn (channel-entry)
+            update-in channel-entry ([] 1) $ fn (channel)
+              let
+                  last-message-id $ :last-message-id channel
+                if (some? last-message-id)
+                  let
+                      last-message $ get-in db ([] :messages last-message-id)
+                      last-author $ get-in db ([] :users (:author-id last-message))
+                    assoc channel :last-message last-message :last-author last-author
+                  , channel
         , :seen-messages $ if (some? channel-id)
           ->> (:messages db)
             map last

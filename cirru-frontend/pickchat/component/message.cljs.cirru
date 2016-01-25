@@ -31,7 +31,8 @@ defn message-box (dirty-chan send)
                   .preventDefault event
                   let
                       target $ .querySelector js/document "|#scroll"
-                    set! (.-scrollTop target) (.-scrollHeight target)
+                    set! (.-scrollTop target)
+                      - (.-scrollHeight target) (.-clientHeight target)
         [] :textarea $ {} :style wi/message-box :placeholder "|Say something"
           , :value @text :on-change on-change :on-key-down on-key-down
 

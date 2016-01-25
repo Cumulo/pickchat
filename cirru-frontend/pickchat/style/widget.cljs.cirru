@@ -96,13 +96,34 @@ def entry-icon $ merge la/row la/center $ {}
   :padding "|0 10px"
   :font-family "|Helvetica Neue Light, Century Gothic"
 
-def channel $ {}
+def channel $ merge la/column $ {}
   :line-height |30px
   :padding |10px
   :font-size 16
   :font-family "|Verdana"
   :border-bottom $ str "|1px solid " (hsl 0 0 90)
   :cursor :pointer
+
+def channel-update $ merge la/row $ {}
+  :align-items :center
+  :white-space :nowrap
+
+def channel-update-author $ {}
+  :color $ hsl 0 0 100
+  :background-color $ hsl 200 80 90
+  :padding "|0 10px"
+  :border-radius 5
+  :line-height |20px
+  :height 20
+
+def channel-update-content $ {}
+  :color $ hsl 0 0 40
+  :overflow :hidden
+  :text-overflow :ellipsis
+
+def channel-title $ {}
+  :color $ hsl 0 0 80
+  :margin-left 20
 
 def message $ merge la/row $ {}
   :padding "|10px"

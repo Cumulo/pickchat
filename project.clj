@@ -11,7 +11,7 @@
                  [differ "0.2.2"]
                  [mvc-works/hsl "0.1.2"]
                  [org.clojure/core.async "0.2.374"]]
-  :plugins [[cirru/lein-sepal "0.0.15"]
+  :plugins [[cirru/lein-sepal "0.0.17"]
             [mvc-works/lein-html-entry "0.0.2"]
             [lein-cljsbuild "1.1.2"]
             [lein-figwheel "0.5.0-3"]]

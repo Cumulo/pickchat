@@ -29,6 +29,10 @@ def channel $ {}
   :time nil
   :author-id nil
   :member-ids $ []
+  :last-message-id nil
+  :last-message-time nil
+  :last-author nil
+  :is-private false
 
 def message $ {}
   :id nil

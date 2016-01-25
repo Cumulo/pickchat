@@ -26,14 +26,22 @@ defn channel-list (channels send)
       map last
       sort $ fn (chan-a chan-b)
         cond
-          (< (:time chan-a) (:time chan-b)) 1
-          (> (:time chan-a) (:time chan-b)) -1
+          (< (:last-message-time chan-a) (:last-message-time chan-b)) 1
+          (> (:last-message-time chan-a) (:last-message-time chan-b)) -1
           :else 0
       map $ fn (channel)
         let
             switch-channel $ fn (event)
               send :channel/enter (:id channel)
-          [] :div ({} :style wi/channel :key (:id channel) :on-click switch-channel) (:title channel)
+          [] :div ({} :style wi/channel :key (:id channel) :on-click switch-channel)
+            if (some? (:last-message channel))
+              [] :div ({} :style wi/channel-update)
+                [] :span ({} :style wi/channel-update-content)
+                  :text (:last-message channel)
+                hspace 10
+                [] :span ({} :style wi/channel-update-author)
+                  :nickname (:last-author channel)
+            [] :div ({} :style wi/channel-title) (:title channel)
 
 defn work-page (store send)
   let

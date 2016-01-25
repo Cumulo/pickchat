@@ -10,7 +10,7 @@ defn render (data)
           {} (:type |text/css) (:href |css/style.css) (:rel |stylesheet)
         [] :link
           {} (:type |image/png) (:rel |icon) (:href |images/discourse.png)
-        [] :style nil "|body * {box-sizing: border-box;}"
+        [] :style nil "|body * {box-sizing: border-box; scroll-behavior: smooth; }"
       [] :body
         [] :div#app
         [] :script

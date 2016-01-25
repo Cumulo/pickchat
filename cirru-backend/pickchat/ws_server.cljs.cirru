@@ -41,6 +41,7 @@ def wss $ new WebSocketServer (js-obj |port 4005)
       let
           now $ new js/Date
         swap! socket-registry dissoc state-id
+        println "|socket close" state-id
         go
           >! receive-chan $ {}
             :type :state/disconnect

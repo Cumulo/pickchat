@@ -8,6 +8,7 @@ ns pickchat.component.message
       [] vspace hspace
     [] cljs.core.async :as a :refer
       [] >! <! chan
+    [] pickchat.util.format :as format
   :require-macros
     [] cljs.core.async.macros :refer
       [] go
@@ -38,7 +39,9 @@ defn message-item (message user send)
   [] :div ({} :style wi/message :key (:id message))
     [] :div ({} :style (wi/message-avatar (:avatar user)))
     hspace 10
-    [] :div ({}) (:text message)
+    [] :div ({} :style wi/message-detail)
+      [] :div ({} :style wi/message-time) (format/display-time (:time message))
+      [] :div ({}) (:text message)
 
 defn message-list (messages store dirty-chan send)
   [] :div ({} :style la/message-list)

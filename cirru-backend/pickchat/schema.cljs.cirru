@@ -19,7 +19,7 @@ def user $ {}
   :id nil
   :username nil
   :nickname nil
-  :avatar nil
+  :avatar |http://tp3.sinaimg.cn/2091311042/180/5599392933/1
   :password nil
   :time 0
 

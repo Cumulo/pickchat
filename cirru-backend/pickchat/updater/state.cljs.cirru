@@ -11,7 +11,7 @@ defn connect (db action-data action-meta)
 
 defn disconnect (db action-data action-meta)
   update db :states $ fn (states)
-    dissoc db :states (:state-id action-meta)
+    dissoc states (:state-id action-meta)
 
 defn read-notice (db action-data action-meta)
   let

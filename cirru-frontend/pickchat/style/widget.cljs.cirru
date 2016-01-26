@@ -110,7 +110,7 @@ def channel-update $ merge la/row $ {}
 
 def channel-update-author $ {}
   :color $ hsl 0 0 100
-  :background-color $ hsl 200 80 90
+  :background-color $ hsl 200 80 80
   :padding "|0 10px"
   :border-radius 5
   :line-height |20px
@@ -123,7 +123,12 @@ def channel-update-content $ {}
 
 def channel-title $ {}
   :color $ hsl 0 0 80
-  :margin-left 20
+  :margin-right 10
+
+def channel-info $ merge la/row $ {}
+  :align-items :center
+
+def channel-members $ merge la/row $ {}
 
 def message $ merge la/row $ {}
   :padding "|10px"
@@ -143,6 +148,14 @@ defn main-avatar (url) $ {}
   :width 40
   :height 40
   :border-radius 20
+  :background-color $ hsl 0 0 90
+  :background-size :cover
+  :background-image $ str "|url(" url "|)"
+
+defn small-avatar (url) $ {}
+  :width 20
+  :height 20
+  :border-radius 10
   :background-color $ hsl 0 0 90
   :background-size :cover
   :background-image $ str "|url(" url "|)"

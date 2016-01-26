@@ -98,7 +98,10 @@ def form-field $ {}
 
 def form-value $ {}
 
-def header-title $ merge flex center $ {}
+def header-title $ merge center $ {}
+  :margin-right 20
+
+def header-info $ merge row center flex $ {}
 
 def message-list $ merge column flex $ {}
   :margin "|200px 0 400px"

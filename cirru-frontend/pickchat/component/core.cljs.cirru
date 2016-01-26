@@ -41,7 +41,12 @@ defn channel-list (channels send)
                 hspace 10
                 [] :span ({} :style wi/channel-update-author)
                   :nickname (:last-author channel)
-            [] :div ({} :style wi/channel-title) (:title channel)
+            [] :div ({} :style wi/channel-info)
+              [] :div ({} :style wi/channel-title) (:title channel)
+              [] :div ({} :style wi/channel-members)
+                ->> (:current-users channel)
+                  map $ fn (user)
+                    [] :div ({} :key (:id user) :style (wi/small-avatar (:avatar user)))
 
 defn work-page (store send)
   let
@@ -55,6 +60,7 @@ defn work-page (store send)
       let
           channels $ :channels store
           channel-id $ get-in store $ [] :state :channel-id
+          channel $ get-in channels $ [] channel-id
           user $ :user store
           dirty-chan $ chan
         [] :div ({} :style la/app)
@@ -70,8 +76,12 @@ defn work-page (store send)
           [] :div ({} :style la/body)
             [] :div ({} :style la/body-header)
               if (some? channel-id)
-                [] :div ({} :style la/header-title) (get-in channels $ [] channel-id :title)
-                [] :div ({} :style la/header-title) "|No channel selected"
+                [] :div ({} :style la/header-info)
+                  [] :div ({} :style la/header-title) (:title channel)
+                  ->> (:current-users channel)
+                    map $ fn (user)
+                      [] :div ({} :style (wi/small-avatar (:avatar user)))
+                [] :div ({} :style la/header-info) "|No channel selected"
               [] :div ({} :style la/header-cornor :on-click check-profile)
                 [] :div ({} :style (wi/main-avatar (:avatar user)))
             hr

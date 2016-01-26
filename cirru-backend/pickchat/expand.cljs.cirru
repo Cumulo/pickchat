@@ -8,13 +8,23 @@ defn expand (db state-id)
   let
       state $ get-in db $ [] :states state-id
       channel-id $ :channel-id state
+      get-channel-users $ fn (the-id)
+        ->> (:states db)
+          map last
+          filter $ fn (state)
+            = (:channel-id state) the-id
+          map $ fn (state)
+            :user-id state
+          filter some?
+          map $ fn (user-id)
+            get-in db $ [] :users user-id
 
     if (some? (:user-id state))
       assoc schema/store
         , :state state
         , :users $ :users db
         , :user $ get-in db $ [] :users (:user-id state)
-        , :channels $ ->> (:channels db)
+        , :channels $ into ({}) $ ->> (:channels db)
           map $ fn (channel-entry)
             update-in channel-entry ([] 1) $ fn (channel)
               let
@@ -23,7 +33,9 @@ defn expand (db state-id)
                   let
                       last-message $ get-in db ([] :messages last-message-id)
                       last-author $ get-in db ([] :users (:author-id last-message))
+                      current-users $ get-channel-users (:id channel)
                     assoc channel :last-message last-message :last-author last-author
+                      , :current-users current-users
                   , channel
         , :seen-messages $ if (some? channel-id)
           ->> (:messages db)

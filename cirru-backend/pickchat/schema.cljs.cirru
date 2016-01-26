@@ -11,6 +11,7 @@ def database $ {}
 
 def state $ {}
   :user-id nil
+  :channel-id nil
   :modals $ []
   :notifications $ []
   :user nil

@@ -22,6 +22,7 @@ def button $ {}
 def textbox $ {}
   :display :inline-block
   :height 30
+  :line-height |30px
   :color $ hsl 0 0 20
   :width :300px
   :padding "|0 10px"

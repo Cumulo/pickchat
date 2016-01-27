@@ -44,7 +44,7 @@ def center-content $ merge row $ {}
   :padding |40px
 
 def sidebar $ merge column $ {}
-  :width |300px
+  :width |40%
 
 def sidebar-header $ merge row center $ {}
   :height 60
@@ -74,8 +74,7 @@ def body-footer $ merge row $ {}
   :background-color $ hsl 0 0 80
 
 def login-column $ merge column $ {}
-  :background-color $ hsl 0 60 80
-  :width 320
+  :width 440
   :padding "|40px"
 
 def action-bar $ merge row $ {}

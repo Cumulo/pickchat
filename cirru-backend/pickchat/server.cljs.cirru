@@ -7,8 +7,10 @@ ns pickchat.server
     [] cljs.nodejs :as nodejs
     [] pickchat.schema :as schema
     [] pickchat.ws-server :as ws-server
-    [] pickchat.expand :refer
-      [] expand
+    [] pickchat.viewer :refer
+      [] framing
+    [] pickchat.scene :refer
+      [] erect
     [] pickchat.updater.core :refer
       [] updater
     [] cljs.core.async :as a :refer
@@ -33,7 +35,8 @@ go $ loop ([]) $ let
     [] state-entry (:states new-data)
     let
         state-id $ first state-entry
-        new-store $ expand new-data state-id
+        scene $ erect new-data
+        new-store $ framing scene state-id new-data
         old-store $ or (get @client-caches state-id) ({})
         changes $ differ/diff old-store new-store
       if

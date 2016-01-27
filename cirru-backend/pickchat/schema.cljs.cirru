@@ -60,3 +60,7 @@ def notification $ {}
   :id nil
   :type :info
   :text nil
+
+def scene $ {}
+  :channels $ {}
+  :seen-messages $ {}

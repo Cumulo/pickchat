@@ -14,6 +14,7 @@ defn framing (scene state-id db)
         , :users $ :users db
         , :user $ get-in db $ [] :users (:user-id state)
         , :channels $ :channels scene
+        , :grouped-users $ :grouped-users scene
         , :seen-messages $ if (some? channel-id)
           get (:seen-messages scene) channel-id
       assoc schema/store

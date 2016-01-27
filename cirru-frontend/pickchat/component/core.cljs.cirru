@@ -20,7 +20,7 @@ ns pickchat.component.core
     [] cljs.core.async.macros :refer
       [] go
 
-defn channel-list (channels send)
+defn channel-list (channels grouped-users send)
   [] :div ({} :style la/column)
     ->> channels
       map last
@@ -43,7 +43,7 @@ defn channel-list (channels send)
             [] :div ({} :style wi/channel-info)
               [] :div ({} :style wi/channel-title) (:title channel)
               [] :div ({} :style wi/channel-members)
-                ->> (:current-users channel)
+                ->> (get grouped-users (:id channel))
                   map $ fn (user)
                     [] :div ({} :key (:id user) :style (wi/small-avatar (:avatar user)))
 
@@ -70,14 +70,14 @@ defn work-page (store send)
               [] :div ({} :style wi/entry-icon :on-click create-channel) |＋
             hr
             [] :div ({} :style la/sidebar-body)
-              channel-list (:channels store) send
+              channel-list (:channels store) (:grouped-users store) send
           vr
           [] :div ({} :style la/body)
             [] :div ({} :style la/body-header)
               if (some? channel-id)
                 [] :div ({} :style la/header-info)
                   [] :div ({} :style la/header-title) (:title channel)
-                  ->> (:current-users channel)
+                  ->> (get (:grouped-users store) (:id channel))
                     map $ fn (user)
                       [] :div ({} :style (wi/small-avatar (:avatar user)) :key (:id user))
                 [] :div ({} :style la/header-info) "|No channel selected"

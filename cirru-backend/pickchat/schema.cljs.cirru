@@ -64,3 +64,4 @@ def notification $ {}
 def scene $ {}
   :channels $ {}
   :seen-messages $ {}
+  :grouped-users $ {}

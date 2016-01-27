@@ -91,10 +91,12 @@ def avatar $ {}
 def entry-icon $ merge la/row la/center $ {}
   :width :auto
   :height |30px
-  :background-color $ hsl 0 0 94
+  :background-color $ hsl 300 80 70
+  :color :white
+  :border-radius 15
   :font-size 20
   :cursor :pointer
-  :padding "|0 10px"
+  :padding "|0 20px"
   :font-family "|Helvetica Neue Light, Century Gothic"
 
 def channel $ merge la/column $ {}

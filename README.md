@@ -2,6 +2,8 @@
 
 Small chatroom exercise in ClojureScript.
 
+#![](resources/public/images/pickchat.png)
+
 ## License
 
 Copyright © 2016 jiyinyiyong

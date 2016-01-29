@@ -13,6 +13,7 @@ pom.xml.asc
 /html
 /frontend
 /backend
-/resources
+/resources/public/index.html
+/resources/public/cljs
 /node_modules
 /figwheel_server.log

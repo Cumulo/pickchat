@@ -16,13 +16,18 @@ ns pickchat.server
     [] cljs.core.async :as a :refer
       [] >! <! chan
     [] differ.core :as differ
+    [] cljs.reader :as reader
 
 nodejs/enable-util-print!
-defn -main ()
-  println "|server started"
-set! *main-cli-fn* -main
 
-defonce data-center $ atom schema/database
+def fs $ js/require |fs
+def db-filename |target/db.edn
+
+defonce data-center $ atom $ if (.existsSync fs db-filename)
+  let
+      old-db $ reader/read-string $ .readFileSync fs db-filename |utf8
+    assoc old-db :states ({})
+  , schema/database
 
 defonce client-caches $ atom $ {}
 
@@ -47,3 +52,13 @@ go $ loop ([]) $ let
           swap! client-caches assoc state-id new-store
   reset! data-center new-data
   recur
+
+defn -main ()
+  js/setInterval
+    fn ()
+      .writeFileSync fs db-filename (pr-str @data-center)
+      println "|wrote to target/db.edn"
+    , 20000
+  println "|server started"
+
+set! *main-cli-fn* -main

@@ -35,7 +35,9 @@ defn erect (db)
           ->> (:states db)
             map last
             filter $ fn (state)
-              = (:channel-id state) (:id channel)
+              and
+                = (:channel-id state) (:id channel)
+                :visibility-state state
             map $ fn (state)
               :user-id state
             filter some?

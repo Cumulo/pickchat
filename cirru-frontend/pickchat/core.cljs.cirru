@@ -37,3 +37,6 @@ go $ loop ([])
     .info js/console @data-center
     mountit
     recur
+
+.addEventListener js/document |visibilitychange $ fn (event)
+  send :state/visibility-state (not (.-hidden js/document))

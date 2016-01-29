@@ -40,7 +40,13 @@ defn login-column (send)
           hspace 10
           [] :div ({} :style wi/button :on-click submit-signup) "|Sign up"
 
+defn about-page ()
+  [] :div ({} :style la/about-page)
+    [] :div ({}) "|This is a simple chatroom made by jiyinyiyong."
+    [] :div ({}) "|It's ugly but simple to see."
+
 defn welcome-page (send)
   fn (send)
     [] :div ({} :style la/app)
       [] login-column send
+      about-page

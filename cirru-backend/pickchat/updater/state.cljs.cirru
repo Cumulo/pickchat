@@ -21,3 +21,8 @@ defn read-notice (db action-data action-meta)
         ->> notications
           remove $ fn (notice)
             = (:id notice) action-data
+
+defn visibility-state (db action-data action-meta)
+  let
+      state-id $ :state-id action-meta
+    assoc-in db ([] :states state-id :visibility-state) action-data

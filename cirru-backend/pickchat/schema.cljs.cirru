@@ -15,6 +15,7 @@ def state $ {}
   :modals $ []
   :notifications $ []
   :user nil
+  :visibility-state true
 
 def user $ {}
   :id nil

@@ -14,15 +14,20 @@ ns pickchat.component.workspace
     [] cljs.core.async.macros :refer
       [] go
 
-defn channel-list (channels grouped-users send)
+defn channel-list (channels grouped-users order send)
   [] :div ({} :style la/column)
     ->> channels
       map last
       sort $ fn (chan-a chan-b)
-        cond
-          (< (:last-message-time chan-a) (:last-message-time chan-b)) 1
-          (> (:last-message-time chan-a) (:last-message-time chan-b)) -1
-          :else 0
+        if (= order :activity)
+          cond
+            (< (:last-message-time chan-a) (:last-message-time chan-b)) 1
+            (> (:last-message-time chan-a) (:last-message-time chan-b)) -1
+            :else 0
+          cond
+            (< (:time chan-a) (:time chan-b)) 1
+            (> (:time chan-a) (:time chan-b)) -1
+            :else 0
       map $ fn (channel)
         let
             switch-channel $ fn (event)
@@ -49,6 +54,11 @@ defn work-page (store send)
         send :modal/add $ {} :name :create-channel :type :modal
       go-home $ fn (event)
         send :channel/leave
+      order $ r/atom :activity
+      view-by-activity $ fn (event)
+        reset! order :activity
+      view-by-create-time $ fn (event)
+        reset! order :create-time
     fn (store send)
       let
           channels $ :channels store
@@ -62,9 +72,14 @@ defn work-page (store send)
               [] :div ({} :style wi/entry-icon :on-click go-home) |Home
               hspace 10
               [] :div ({} :style wi/entry-icon :on-click create-channel) |＋
+              hspace 20
+              [] :div ({} :style wi/switch-menu)
+                [] :span ({} :style wi/switch-menu-label :on-click view-by-activity) "|by activity"
+                hspace 6
+                [] :span ({} :style wi/switch-menu-label :on-click view-by-create-time) "|by create time"
             hr
             [] :div ({} :style la/sidebar-body)
-              channel-list (:channels store) (:grouped-users store) send
+              channel-list (:channels store) (:grouped-users store) @order send
           vr
           [] :div ({} :style la/body)
             [] :div ({} :style la/body-header)

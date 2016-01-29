@@ -65,6 +65,7 @@ def body $ merge flex column $ {}
 def body-header $ merge row center $ {}
   :height 60
   :font-family "|Helvetica Neue Light, Century Gothic"
+  :padding "|0 10px"
 
 def body-body $ merge flex $ {}
   :overflow-y :auto
@@ -104,3 +105,8 @@ def header-info $ merge row center flex $ {}
 
 def message-list $ merge column flex $ {}
   :margin "|200px 0 400px"
+
+def about-page $ merge column $ {}
+  :font-family "|Verdana"
+  :padding "|20px"
+  :line-height "|30px"

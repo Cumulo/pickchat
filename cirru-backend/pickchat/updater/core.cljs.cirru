@@ -14,6 +14,7 @@ defn updater (db action-type action-data action-meta)
         :state/connect up-state/connect
         :state/disconnect up-state/disconnect
         :state/read-notice up-state/read-notice
+        :state/visibility-state up-state/visibility-state
 
         :user/login up-user/login
         :user/signup up-user/signup

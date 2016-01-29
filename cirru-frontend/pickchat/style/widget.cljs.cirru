@@ -178,3 +178,13 @@ def message-detail $ merge la/column $ {}
 def message-time $ {}
   :font-size 14
   :color $ hsl 0 0 80
+
+def switch-menu $ {}
+  :font-size |12px
+  :color $ hsl 0 0 100
+
+def switch-menu-label $ {}
+  :padding "|0 8px"
+  :background-color $ hsl 0 0 80
+  :border-radius 10
+  :cursor :pointer

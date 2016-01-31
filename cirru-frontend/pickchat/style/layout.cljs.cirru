@@ -89,12 +89,13 @@ def header-cornor $ {}
 
 def form $ merge column $ {}
   :padding "|20px"
+  :font-family "|Verdana"
 
 def form-line $ merge row $ {}
   :margin-bottom |10px
 
 def form-field $ {}
-  :width |100px
+  :width |200px
 
 def form-value $ {}
 

@@ -17,3 +17,7 @@ defn leave (db action-data action-meta)
 
 defn enter (db action-data action-meta)
   assoc-in db ([] :states (:state-id action-meta) :channel-id) action-data
+
+defn create-private (db action-data action-meta)
+  println "|request for private channel" action-data
+  , db

@@ -41,4 +41,21 @@ defn render-my-profile (modal-data store send)
           [] :div ({} :style wi/button :on-click on-logout) |Logout
 
 defn render-member-profile (modal-data store send)
-  [] :div ({}) "|other member s profile here"
+  let
+      member-id $ :data modal-data
+      member $ get-in store ([] :users member-id)
+      start-chat $ fn (event)
+        send :modal/remove-one (:id modal-data)
+        send :channel/create-private (:data modal-data)
+    [] :div ({} :style la/form)
+      [] :div ({} :style la/form-line)
+        [] :div ({} :style la/form-field) |Nickname
+        [] :div ({} :style la/form-value) (:nickname member)
+      [] :div ({} :style la/form-line)
+        [] :div ({} :style la/form-field) |Avatar
+        [] :div ({} :style la/form-value)
+          [] :img $ {} :style wi/avatar :src (:avatar member)
+      [] :div ({} :style la/form-line)
+        [] :div ({} :style la/form-field) "|Private Message"
+        [] :div ({} :style la/form-value)
+          [] :div ({} :style wi/button :on-click start-chat) |Hi

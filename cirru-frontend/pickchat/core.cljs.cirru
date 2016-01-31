@@ -47,3 +47,6 @@ defn -main ()
   println "|Running main..."
 
 set! js/window.onload -main
+
+defn fig-reload ()
+  render-dom

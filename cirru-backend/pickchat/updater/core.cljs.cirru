@@ -28,6 +28,7 @@ defn updater (db action-type action-data action-meta)
         :modal/hit-card up-modal/hit-card
 
         :channel/create up-channel/create
+        :channel/create-private up-channel/create-private
         :channel/enter up-channel/enter
         :channel/leave up-channel/leave
 

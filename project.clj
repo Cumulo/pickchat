@@ -21,7 +21,8 @@
   :main ^:skip-aot pickchat.core
   :target-path "target/%s"
   :cljsbuild {:builds {:web-dev {:source-paths ["frontend"]
-                             :figwheel {:websocket-host "repo"}
+                             :figwheel {:websocket-host "repo"
+                                        :on-jsload "pickchat.core/fig-reload"}
                              :compiler {:main pickchat.core
                                         :asset-path "cljs/out"
                                         :output-to  "resources/public/cljs/main.js"

@@ -6,6 +6,8 @@ ns pickchat.component.message
     [] pickchat.style.widget :as wi
     [] pickchat.component.module :refer
       [] vspace hspace
+    [] pickchat.component.member :refer
+      [] member-avatar
     [] cljs.core.async :as a :refer
       [] >! <! chan
     [] pickchat.util.format :as format
@@ -38,7 +40,7 @@ defn message-box (dirty-chan send)
 
 defn message-item (message user send)
   [] :div ({} :style wi/message :key (:id message))
-    [] :div ({} :style (wi/message-avatar (:avatar user)))
+    member-avatar user :normal send
     hspace 10
     [] :div ({} :style wi/message-detail)
       [] :div ({} :style wi/message-time) (format/display-time (:time message))

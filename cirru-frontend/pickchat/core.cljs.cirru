@@ -10,11 +10,6 @@ ns pickchat.core
     [] differ.core :as differ
     [] devtools.core :as devtools
 
-enable-console-print!
-
-devtools/set-pref! :install-sanity-hints true
-devtools/install!
-
 defonce data-center $ r/atom $ {}
 
 defn send (action-type action-data)
@@ -22,21 +17,33 @@ defn send (action-type action-data)
   go
     >! ws-client/send-chan $ {} :type action-type :data action-data
 
-defn mountit ()
+defn render-dom ()
   r/render-component
     [] component/page @data-center send
     .querySelector js/document |#app
 
-mountit
+defn listen-data-changes ()
+  go $ loop ([])
+    let
+        changes $ <! ws-client/receive-chan
+      reset! data-center $ differ/patch @data-center changes
+      .info js/console "|∆" changes
+      .info js/console @data-center
+      render-dom
+      recur
 
-go $ loop ([])
-  let
-      changes $ <! ws-client/receive-chan
-    reset! data-center $ differ/patch @data-center changes
-    .info js/console "|∆" changes
-    .info js/console @data-center
-    mountit
-    recur
+defn listen-visibility ()
+  .addEventListener js/document |visibilitychange $ fn (event)
+    send :state/visibility-state (not (.-hidden js/document))
 
-.addEventListener js/document |visibilitychange $ fn (event)
-  send :state/visibility-state (not (.-hidden js/document))
+defn -main ()
+  enable-console-print!
+  devtools/set-pref! :install-sanity-hints true
+  devtools/install!
+
+  listen-data-changes
+  listen-visibility
+  render-dom
+  println "|Running main..."
+
+set! js/window.onload -main

@@ -154,6 +154,7 @@ defn main-avatar (url) $ {}
   :background-color $ hsl 0 0 90
   :background-size :cover
   :background-image $ str "|url(" url "|)"
+  :cursor :pointer
 
 defn small-avatar (url) $ {}
   :width 20
@@ -162,6 +163,7 @@ defn small-avatar (url) $ {}
   :background-color $ hsl 0 0 90
   :background-size :cover
   :background-image $ str "|url(" url "|)"
+  :cursor :pointer
 
 def hr $ {}
   :width |100%

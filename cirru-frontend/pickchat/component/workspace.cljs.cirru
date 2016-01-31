@@ -8,6 +8,8 @@ ns pickchat.component.workspace
     [] pickchat.style.widget :as wi
     [] pickchat.component.message :refer
       [] message-box message-list
+    [] pickchat.component.member :refer
+      [] member-avatar
     [] cljs.core.async :as a :refer
       [] >! <! chan
   :require-macros
@@ -35,7 +37,7 @@ defn channel-list (channels grouped-users order send)
           [] :div ({} :style wi/channel :key (:id channel) :on-click switch-channel)
             if (some? (:last-message channel))
               [] :div ({} :style wi/channel-update)
-                [] :div ({} :style (wi/small-avatar (:avatar (:last-author channel))))
+                member-avatar (:last-author channel) :small send
                 hspace 10
                 [] :span ({} :style wi/channel-update-content)
                   :text (:last-message channel)
@@ -44,7 +46,7 @@ defn channel-list (channels grouped-users order send)
               [] :div ({} :style wi/channel-members)
                 ->> (get grouped-users (:id channel))
                   map $ fn (user)
-                    [] :div ({} :key (:id user) :style (wi/small-avatar (:avatar user)))
+                    member-avatar user :small send
 
 defn work-page (store send)
   let
@@ -88,10 +90,10 @@ defn work-page (store send)
                   [] :div ({} :style la/header-title) (:title channel)
                   ->> (get (:grouped-users store) (:id channel))
                     map $ fn (user)
-                      [] :div ({} :style (wi/small-avatar (:avatar user)) :key (:id user))
+                      member-avatar user :small send
                 [] :div ({} :style la/header-info) "|No channel selected"
               [] :div ({} :style la/header-cornor :on-click check-profile)
-                [] :div ({} :style (wi/main-avatar (:avatar user)))
+                member-avatar user :normal send
             hr
             [] :div ({} :style la/body-body :id :scroll)
               message-list (:seen-messages store) store dirty-chan send

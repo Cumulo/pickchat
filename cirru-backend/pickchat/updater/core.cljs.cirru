@@ -33,6 +33,7 @@ defn updater (db action-type action-data action-meta)
         :channel/leave up-channel/leave
 
         :message/create up-message/create
+        :message/like up-message/like
 
         , identity
     handler db action-data action-meta

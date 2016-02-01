@@ -39,12 +39,22 @@ defn message-box (dirty-chan send)
           , :value @text :on-change on-change :on-key-down on-key-down
 
 defn message-item (message user send)
-  [] :div ({} :style wi/message :key (:id message))
-    member-avatar user :normal send
-    hspace 10
-    [] :div ({} :style wi/message-detail)
-      [] :div ({} :style wi/message-time) (format/display-time (:time message))
-      [] :div ({}) (:text message)
+  let
+      like-message $ fn (event)
+        send :message/like (:id message)
+      likes $ count (:liked-by message)
+    [] :div ({} :style wi/message :key (:id message))
+      member-avatar user :normal send
+      hspace 10
+      [] :div ({} :style wi/message-detail)
+        [] :div ({} :style wi/message-time) (format/display-time (:time message))
+        [] :div ({})
+          :text message
+          hspace 20
+          [] :div ({} :style wi/heart-block :on-click like-message)
+            [] :span ({} :style (wi/heart-symbol likes)) |❤
+            if (> likes 0)
+              [] :span ({} :style wi/heart-count) likes
 
 defn message-list (messages store dirty-chan send)
   [] :div ({} :style la/message-list)

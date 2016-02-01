@@ -195,3 +195,19 @@ def switch-menu-label $ {}
   :background-color $ hsl 0 0 80
   :border-radius 10
   :cursor :pointer
+
+def heart-block $ {}
+  :font-size 20
+  :color $ hsl 0 100 60
+  :display :inline-block
+  :cursor :pointer
+
+defn heart-symbol (likes)
+  {}
+    :font-size 18
+    :vertical-align :middle
+    :opacity $ if (> likes 0) 1 0.4
+
+def heart-count $ {}
+  :font-size 14
+  :vertical-align :middle

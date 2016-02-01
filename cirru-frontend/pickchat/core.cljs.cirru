@@ -33,8 +33,10 @@ defn listen-data-changes ()
       recur
 
 defn listen-visibility ()
-  .addEventListener js/document |visibilitychange $ fn (event)
-    send :state/visibility-state (not (.-hidden js/document))
+  .addEventListener js/window |focus $ fn (event)
+    send :state/visibility-state true
+  .addEventListener js/window |blur $ fn (event)
+    send :state/visibility-state false
 
 defn -main ()
   enable-console-print!
@@ -42,7 +44,7 @@ defn -main ()
   devtools/install!
 
   listen-data-changes
-  listen-visibility
+  -- listen-visibility
   render-dom
   println "|Running main..."
 

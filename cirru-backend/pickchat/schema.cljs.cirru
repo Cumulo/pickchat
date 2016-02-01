@@ -42,6 +42,7 @@ def message $ {}
   :time nil
   :channel-id nil
   :author-id nil
+  :liked-by $ []
 
 def store $ {}
   :state state

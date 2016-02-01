@@ -38,13 +38,16 @@ defn message-box (dirty-chan send)
         [] :textarea $ {} :style wi/message-box :placeholder "|Say something"
           , :value @text :on-change on-change :on-key-down on-key-down
 
-defn message-item (message user send)
+defn message-item (message member user-id send)
   let
       like-message $ fn (event)
         send :message/like (:id message)
       likes $ count (:liked-by message)
+      liked-by-me? $ some
+        fn (member-id) (= member-id user-id)
+        :liked-by message
     [] :div ({} :style wi/message :key (:id message))
-      member-avatar user :normal send
+      member-avatar member :normal send
       hspace 10
       [] :div ({} :style wi/message-detail)
         [] :div ({} :style wi/message-time) (format/display-time (:time message))
@@ -52,7 +55,7 @@ defn message-item (message user send)
           :text message
           hspace 20
           [] :div ({} :style wi/heart-block :on-click like-message)
-            [] :span ({} :style (wi/heart-symbol likes)) |❤
+            [] :span ({} :style (wi/heart-symbol liked-by-me?)) |❤
             if (> likes 0)
               [] :span ({} :style wi/heart-count) likes
 
@@ -62,5 +65,5 @@ defn message-list (messages store dirty-chan send)
       map $ fn (message)
         let
             author-id $ :author-id message
-            user $ get-in store $ [] :users author-id
-          message-item message user send
+            member $ get-in store $ [] :users author-id
+          message-item message member (get-in store ([] :user :id)) send

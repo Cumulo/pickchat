@@ -202,11 +202,11 @@ def heart-block $ {}
   :display :inline-block
   :cursor :pointer
 
-defn heart-symbol (likes)
+defn heart-symbol (liked-by-me?)
   {}
     :font-size 18
     :vertical-align :middle
-    :opacity $ if (> likes 0) 1 0.4
+    :opacity $ if liked-by-me? 1 0.4
 
 def heart-count $ {}
   :font-size 14

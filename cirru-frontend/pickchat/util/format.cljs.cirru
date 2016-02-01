@@ -5,6 +5,11 @@ ns pickchat.util.format
 
 def s "| "
 
+defn two-digits (n)
+  if (< n 10)
+    str |0 n
+    str n
+
 defn display-time (unix-secs)
   let
       time-obj $ new js/Date unix-secs
@@ -13,4 +18,4 @@ defn display-time (unix-secs)
       date $ .getDate time-obj
       hours $ .getHours time-obj
       mins $ .getMinutes time-obj
-    str month |- date s hours |: mins
+    str (two-digits month) |- (two-digits date) s (two-digits hours) |: (two-digits mins)

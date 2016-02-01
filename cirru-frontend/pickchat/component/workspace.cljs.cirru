@@ -34,7 +34,9 @@ defn channel-list (channels grouped-users order send)
         let
             switch-channel $ fn (event)
               send :channel/enter (:id channel)
-          [] :div ({} :style wi/channel :key (:id channel) :on-click switch-channel)
+            is-private $ :is-private channel
+          [] :div
+            {} :style (wi/channel is-private) :key (:id channel) :on-click switch-channel
             if (some? (:last-message channel))
               [] :div ({} :style wi/channel-update)
                 member-avatar (:last-author channel) :small send

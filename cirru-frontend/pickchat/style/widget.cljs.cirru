@@ -99,13 +99,17 @@ def entry-icon $ merge la/row la/center $ {}
   :padding "|0 20px"
   :font-family "|Helvetica Neue Light, Century Gothic"
 
-def channel $ merge la/column $ {}
-  :line-height |30px
-  :padding |10px
-  :font-size 16
-  :font-family "|Verdana"
-  :border-bottom $ str "|1px solid " (hsl 0 0 90)
-  :cursor :pointer
+defn channel (is-private)
+  merge la/column
+    {}
+      :line-height |30px
+      :padding |10px
+      :font-size 16
+      :font-family "|Verdana"
+      :border-bottom $ str "|1px solid " (hsl 0 0 90)
+      :cursor :pointer
+    if is-private
+      {} :background-color (hsl 300 80 94)
 
 def channel-update $ merge la/row $ {}
   :align-items :center
@@ -146,6 +150,7 @@ defn message-avatar (url) $ {}
   :background-color $ hsl 0 0 90
   :background-size :cover
   :background-image $ str "|url(" (if (some? url) url default-avatar) "|)"
+  :cursor :pointer
 
 defn main-avatar (url) $ {}
   :width 40

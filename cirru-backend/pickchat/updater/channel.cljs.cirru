@@ -19,5 +19,12 @@ defn enter (db action-data action-meta)
   assoc-in db ([] :states (:state-id action-meta) :channel-id) action-data
 
 defn create-private (db action-data action-meta)
-  println "|request for private channel" action-data
-  , db
+  let
+      channel-id $ :id action-meta
+      state-id $ :state-id action-meta
+      user-id $ get-in db $ [] :states state-id :user-id
+      member-id action-data
+    assoc-in db ([] :channels channel-id)
+      assoc schema/channel :id channel-id :title "|Between"
+        , :author-id user-id :time (:time action-meta) :is-private true
+        , :member-ids ([] user-id member-id)

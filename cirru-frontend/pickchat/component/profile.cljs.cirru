@@ -45,6 +45,7 @@ defn render-member-profile (modal-data store send)
       member-id $ :data modal-data
       member $ get-in store ([] :users member-id)
       start-chat $ fn (event)
+        .stopPropagation event
         send :modal/remove-one (:id modal-data)
         send :channel/create-private (:data modal-data)
     [] :div ({} :style la/form)

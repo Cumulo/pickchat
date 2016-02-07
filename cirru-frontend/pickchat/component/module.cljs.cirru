@@ -39,3 +39,11 @@ defn imput (props)
         :value $ if (> @time (:time props)) @text (:value props)
         :on-change on-local-change
         :placeholder (:placeholder props)
+
+defn icon
+  (name title)
+    [] :span ({} :class |oi :data-glyph name :title title :aria-hidden true)
+  (name title style)
+    [] :span ({} :class |oi :data-glyph name :title title :aria-hidden true :style style)
+  (name title style on-click)
+    [] :span ({} :class |oi :data-glyph name :title title :aria-hidden true :style style :on-click on-click)

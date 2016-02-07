@@ -43,6 +43,7 @@ def message $ {}
   :channel-id nil
   :author-id nil
   :liked-by $ []
+  :task-stage :inactive
 
 def store $ {}
   :state state

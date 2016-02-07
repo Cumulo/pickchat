@@ -13,6 +13,7 @@
   "author": "jiyinyiyong",
   "license": "MIT",
   "devDependencies": {
+    "open-iconic": "^1.1.1",
     "shortid": "^2.2.4",
     "ws": "^1.0.1"
   }

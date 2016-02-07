@@ -34,6 +34,7 @@ defn updater (db action-type action-data action-meta)
 
         :message/create up-message/create
         :message/like up-message/like
+        :message/set-task up-message/set-task
 
         , identity
     handler db action-data action-meta

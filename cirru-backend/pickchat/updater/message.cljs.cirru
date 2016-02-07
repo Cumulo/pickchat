@@ -29,3 +29,14 @@ defn like (db action-data action-meta)
           some (fn (item) (= item user-id)) liked-by
           remove (fn (member-id) (= member-id user-id)) liked-by
           conj liked-by user-id
+
+defn set-task (db action-data action-meta)
+  let
+      message-id $ :message-id action-data
+      stage $ :stage action-data
+    -> db
+      assoc-in ([] :messages message-id :task-stage) $ case stage
+        :todo :todo
+        :done :done
+        :none :none
+        , :none

@@ -111,3 +111,6 @@ def about-page $ merge column $ {}
   :font-family "|Verdana"
   :padding "|20px"
   :line-height "|30px"
+
+def message-text $ {}
+  :flex 1

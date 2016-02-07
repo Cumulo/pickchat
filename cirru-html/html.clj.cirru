@@ -9,6 +9,8 @@ defn render (data)
         [] :link
           {} (:type |text/css) (:href |css/style.css) (:rel |stylesheet)
         [] :link
+          {} (:type |text/css) (:href |../../node_modules/open-iconic/font/css/open-iconic.css) (:rel |stylesheet)
+        [] :link
           {} (:type |image/png) (:rel |icon) (:href |images/pickchat.png)
         [] :style nil "|body * {box-sizing: border-box; scroll-behavior: smooth; }"
       [] :body

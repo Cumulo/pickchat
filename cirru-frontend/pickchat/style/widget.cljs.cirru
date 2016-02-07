@@ -181,6 +181,7 @@ def vr $ {}
   :background-color $ hsl 0 0 90
 
 def message-detail $ merge la/column $ {}
+  :flex 1
 
 def message-time $ {}
   :font-size 14
@@ -196,11 +197,12 @@ def switch-menu-label $ {}
   :border-radius 10
   :cursor :pointer
 
-def heart-block $ {}
+def icon-block $ {}
   :font-size 20
   :color $ hsl 0 100 60
   :display :inline-block
   :cursor :pointer
+  :-webkit-user-select :none
 
 defn heart-symbol (liked-by-me?)
   {}
@@ -210,4 +212,8 @@ defn heart-symbol (liked-by-me?)
 
 def heart-count $ {}
   :font-size 14
+  :vertical-align :middle
+
+def task-icon $ {}
+  :font-size 15
   :vertical-align :middle

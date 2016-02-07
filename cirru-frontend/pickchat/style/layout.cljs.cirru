@@ -44,7 +44,7 @@ def center-content $ merge row $ {}
   :padding |40px
 
 def sidebar $ merge column $ {}
-  :width |40%
+  :width |25%
 
 def sidebar-header $ merge row center $ {}
   :height 60
@@ -105,7 +105,8 @@ def header-title $ merge center $ {}
 def header-info $ merge row center flex $ {}
 
 def message-list $ merge column flex $ {}
-  :margin "|200px 0 400px"
+  :padding "|200px 0 400px"
+  :overflow-y :auto
 
 def about-page $ merge column $ {}
   :font-family "|Verdana"

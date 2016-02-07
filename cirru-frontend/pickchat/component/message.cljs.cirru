@@ -86,3 +86,12 @@ defn message-list (messages store dirty-chan send)
             author-id $ :author-id message
             member $ get-in store $ [] :users author-id
           message-item message member (get-in store ([] :user :id)) send
+
+defn message-collection (messages store dirty-chan send)
+  [] :div ({})
+    ->> messages
+      map $ fn (message)
+        let
+            author-id $ :author-id message
+            member $ get-in store $ [] :users author-id
+          message-item message member (get-in store ([] :user :id)) send

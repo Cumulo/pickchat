@@ -177,7 +177,6 @@ def hr $ {}
 
 def vr $ {}
   :width 1
-  :height |100%
   :background-color $ hsl 0 0 90
 
 def message-detail $ merge la/column $ {}

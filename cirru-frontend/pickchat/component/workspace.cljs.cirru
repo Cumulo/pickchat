@@ -7,7 +7,7 @@ ns pickchat.component.workspace
     [] pickchat.style.layout :as la
     [] pickchat.style.widget :as wi
     [] pickchat.component.message :refer
-      [] message-box message-list
+      [] message-box message-list message-collection
     [] pickchat.component.member :refer
       [] member-avatar
     [] cljs.core.async :as a :refer
@@ -70,6 +70,12 @@ defn work-page (store send)
           channel $ get-in channels $ [] channel-id
           user $ :user store
           dirty-chan $ chan
+          collected-messages $ ->> (:seen-messages store)
+            filter $ fn (message)
+              or
+                > (count (:liked-by message)) 0
+                = (:task-stage message) :todo
+                = (:task-stage message) :done
         [] :div ({} :style la/app)
           [] :div ({} :style la/sidebar)
             [] :div ({} :style la/sidebar-header)
@@ -97,9 +103,14 @@ defn work-page (store send)
               [] :div ({} :style la/header-cornor :on-click check-profile)
                 member-avatar user :normal send
             hr
-            [] :div ({} :style la/body-body :id :scroll)
-              message-list (:seen-messages store) store dirty-chan send
-            hr
-            if (some? channel-id)
-              [] :div ({} :style la/body-footer)
-                [] message-box dirty-chan send
+            [] :div ({} :style (merge la/flex la/row))
+              [] :div ({} :style (merge la/flex la/column))
+                [] :div ({} :style la/body-body :id :scroll)
+                  message-list (:seen-messages store) store dirty-chan send
+                hr
+                if (some? channel-id)
+                  [] :div ({} :style la/body-footer)
+                    [] message-box dirty-chan send
+              vr
+              [] :div ({} :style (merge la/flex la/column))
+                message-collection collected-messages store dirty-chan send

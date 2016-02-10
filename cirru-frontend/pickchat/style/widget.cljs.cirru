@@ -216,3 +216,30 @@ def heart-count $ {}
 def task-icon $ {}
   :font-size 15
   :vertical-align :middle
+
+def viewer-table $ merge la/row $ {}
+
+def viewer-column $ merge la/column $ {}
+  :width :auto
+  :padding "| 5px 10px"
+
+def viewer-entry $ merge la/row $ {}
+  :height 30
+  :width :auto
+  :align-items :center
+
+def viewer-key $ {}
+  :display :inline-block
+
+def viewer-literal $ {}
+  :display :inline-block
+  :background-color $ hsl 240 80 80
+  :color :white
+  :padding "|0px 8px"
+
+def viewer-info $ {}
+  :display :inline-block
+  :background-color $ hsl 300 80 80
+  :color :white
+  :padding "|0px 8px"
+  :cursor :pointer

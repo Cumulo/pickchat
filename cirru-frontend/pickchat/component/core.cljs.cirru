@@ -49,4 +49,4 @@ defn page (store send)
           [] notifications (get-in store $ [] :state :notifications) send
           [] modal-stack (get-in store $ [] :state :modals) store send
           if @show-edn
-            edn-viewer store send
+            [] edn-viewer store send

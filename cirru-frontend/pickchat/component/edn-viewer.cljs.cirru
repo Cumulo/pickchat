@@ -14,18 +14,23 @@ def viewer $ {}
   :background $ hsl 0 50 30 0.6
 
 defn path-panel (path)
-  [] :div ({}) "|path"
+  [] :div ({})
+    map-indexed
+      fn (i segment)
+        [] :div ({} :key i :style wi/viewer-literal) (pr-str segment)
+      , path
 
 defn render-info (data cursor k update-path)
   let
       on-click $ fn (event)
-        update-path (conj cursor k)
+        if (coll? data)
+          update-path (conj cursor k)
     [] :div ({} :style wi/viewer-info :on-click on-click)
       cond
-        (map? data) |hashmap
-        (vector? data) |vector
-        (list? data) |list
-        :else |literal
+        (map? data) $ str |hashmap: (count data)
+        (vector? data) $ str |vector: (count data)
+        (list? data) $ str |list: (count data)
+        :else $ pr-str data
 
 defn render-literal (data)
   [] :div ({} :style wi/viewer-literal)
@@ -39,15 +44,24 @@ defn render-hashmap (acc data cursor update-path)
       recur
         conj acc
           [] :div ({} :key k :style wi/viewer-entry)
-            [] :div ({}) $ render-literal k
+            render-literal k
             hspace 10
-            [] :div ({}) $ render-info (last entry) cursor k update-path
+            render-info (last entry) cursor k update-path
         dissoc data k
         , cursor update-path
 
-defn render-vector (acc data cursor update-path) |vector
-
-defn render-list (acc data cursor update-path) |list
+defn render-list (acc data cursor i update-path)
+  if (= (count data) 0) acc
+    let
+        v $ get data i
+      recur
+        conj acc
+          [] :div ({} :key i :style wi/viewer-entry)
+            render-literal i
+            hspace 10
+            render-info v cursor i update-path
+        rest data
+        , cursor (+ 1 i) update-path
 
 defn render-column (store cursor update-path)
   let
@@ -56,15 +70,15 @@ defn render-column (store cursor update-path)
     [] :div ({} :style wi/viewer-column :key counter)
       cond
         (map? data) $ render-hashmap (list) data cursor update-path
-        (vector? data) $ render-vector (list) data cursor update-path
-        (list? data) $ render-list (list) data cursor update-path
+        (vector? data) $ render-list (list) data cursor 0 update-path
+        (list? data) $ render-list (list) data cursor 0 update-path
         :else $ render-literal data
 
 defn render-table (acc store path0 counter update-path)
   let
       cursor $ subvec path0 0 counter
     if (= counter (count path0))
-      conj acc
+      reverse $ conj acc
         render-column store cursor update-path
       recur
         conj acc $ render-column store cursor update-path
@@ -72,11 +86,12 @@ defn render-table (acc store path0 counter update-path)
 
 defn edn-viewer (store send)
   let
-      path $ r/atom $ [] :state
+      path $ r/atom $ []
       update-path $ fn (new-path)
         reset! path new-path
     fn (store send)
       [] :div ({} :style (merge la/fullscreen viewer))
-        path-panel @path
+        [] :div ({} :style wi/viewer-path)
+          path-panel @path
         [] :div ({} :style wi/viewer-table)
           render-table (list) store @path 0 update-path

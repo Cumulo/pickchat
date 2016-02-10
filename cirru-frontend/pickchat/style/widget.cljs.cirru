@@ -218,6 +218,9 @@ def task-icon $ {}
   :vertical-align :middle
 
 def viewer-table $ merge la/row $ {}
+  :font-family "|Menlo"
+  :font-size 14
+  :line-height |24px
 
 def viewer-column $ merge la/column $ {}
   :width :auto
@@ -243,3 +246,9 @@ def viewer-info $ {}
   :color :white
   :padding "|0px 8px"
   :cursor :pointer
+
+def viewer-path $ {}
+  :padding "|5px 10px"
+  :font-family "|Menlo"
+  :font-size 14
+  :line-height |24px
